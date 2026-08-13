@@ -6,9 +6,15 @@
 - `git-maid`: autonomous dirty tree commit organization.
 - `ios-preflight`: lightweight Apple-platform repo readiness checks.
 - `issue-batch-planner`: dependency-aware issue and milestone planning.
+- `grill-me`: decision interview tuned for Charlie's product, proof, and scope tradeoffs.
+- `handoff`: compact continuation docs with branch, PR, check, proof, and blocker state.
 - `migration-playbook`: staged migration planning with parity and rollback gates.
 - `openapi-parity`: API contract drift and generated-client risk audit.
 - `quality-gates-audit`: local and CI quality gate audit.
+- `research`: primary-source research with local artifact and product implication bias.
+- `tdd`: red-green-refactor loop tuned for Swift Testing, XcodeBuildMCP, provider proof, and repo-local gates.
+- `wait-what`: concise re-pitching when agent reasoning or proof boundaries do not land.
+- `wayfinder`: decision-ticket mapping for large, multi-session product or architecture efforts.
 
 ## Recommended Additions
 

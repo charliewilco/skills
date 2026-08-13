@@ -20,6 +20,15 @@ These already exist as memory-derived workflows in this Codex installation and s
 - `codex-state-backup`: archive `~/.codex` and `~/Documents/Codex` before Mac resets or migration.
 - `artifact-grounded-research`: force primary-source research and local artifact inspection before strategy or naming recommendations.
 
+## Recently Added From Matt Pocock-Inspired Workflows
+
+- `tdd`
+- `wait-what`
+- `wayfinder`
+- `research`
+- `grill-me`
+- `handoff`
+
 ## Add Automation Definitions
 
 Start with report-only, paused automations:
