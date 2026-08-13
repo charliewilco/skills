@@ -30,18 +30,26 @@ This repo intentionally avoids committing machine secrets, live Codex state, SQL
 
 Use `Shared-AGENTS.md` as the source text for the shared expectations layer, then keep local machine-specific overrides in `~/.codex/AGENTS.md` under a clearly marked local section.
 
-Preview setup:
+Run the setup wizard:
 
 ```sh
-./setup.sh --dry-run
+sh ./setup.sh
 ```
 
-Install symlinks:
+The wizard asks which app to configure, whether to preview first, whether to replace the active agent instruction file, and whether conflicting paths should be backed up and replaced.
+
+Preview Codex setup:
 
 ```sh
-./setup.sh
+sh ./setup.sh --target codex --dry-run
 ```
 
-By default, `Shared-AGENTS.md` is linked to `~/.codex/Shared-AGENTS.md` so it does not overwrite an installation's active `~/.codex/AGENTS.md`. Use `./setup.sh --replace-agents --force` only when this repo should own the active global agent file.
+Install all supported agent links:
 
-If a target already exists, the script stops instead of replacing it. Rerun with `--force` to move the existing target into `~/.codex/backups/` and install the symlink.
+```sh
+sh ./setup.sh --target all
+```
+
+By default, `Shared-AGENTS.md` is linked as a shared reference file, not as the active instruction file. Use `sh ./setup.sh --target codex --replace-agents --force` only when this repo should own the active global agent file.
+
+If a target already exists, the script stops instead of replacing it. Rerun with `--force` to move the existing target into that app home's `backups/` directory and install the symlink.
