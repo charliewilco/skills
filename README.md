@@ -1,55 +1,89 @@
-# Charlie's Codex Operating Repo
+# Agent Setup
 
-This repository is the shared layer for Charlie's Codex installations.
+Shared skills, instructions, plugin notes, and automation ideas for Charlie's agent tools.
 
-## Structure
+This repo is meant to be checked out once and linked into each agent installation. The files stay versioned here; local agent homes get symlinks.
 
-- `skills/`: reusable Codex skills and skill candidates.
-- `automations/`: proposed recurring Codex automations, monitors, and maintenance loops.
-- `plugins/`: installed plugin inventory and plugin policy notes.
-- `Shared-AGENTS.md`: portable expectations for how Codex should operate across installations.
-- `setup.sh`: symlink installer for repo-owned Codex content.
-- `NEXT.md`: prioritized backlog for expanding this repo.
+## What's In Here
 
-## Current Fit
+- `skills/` - reusable skills for coding, research, planning, handoff, repo hygiene, and validation workflows.
+- `automations/` - report-only automation ideas and future Codex automation definitions.
+- `plugins/` - plugin inventory and notes about which connectors are worth installing.
+- `Shared-AGENTS.md` - portable agent expectations shared across installations.
+- `setup.sh` - installer/wizard that links this repo into supported agent homes.
+- `NEXT.md` - backlog for the next skills, automations, and plugin work.
 
-The existing skill set matches recurring work well:
+## Setup
 
-- `skills/dirty-branch` and `skills/git-maid`: dirty branch triage, commit splitting, and WIP recovery.
-- `skills/ios-preflight`: Apple project viability, simulator readiness, and Xcode churn diagnosis.
-- `skills/issue-batch-planner`: milestone/backlog planning before implementation.
-- `skills/migration-playbook`: staged migrations for APIs, runtimes, edge functions, and route retirement.
-- `skills/openapi-parity`: contract drift checks for OpenAPI and generated clients.
-- `skills/quality-gates-audit`: local and CI gate alignment.
-
-The main gap is product-specific operational muscle. The strongest next skills to promote are Burton PR validation/merge, Burton fix PRs into `next`, iOS named-device validation, physical-device install/run, Reviewer provider live-proof workflows, and Xcode churn classification.
-
-## Installation Notes
-
-This repo intentionally avoids committing machine secrets, live Codex state, SQLite databases, or private session logs.
-
-Use `Shared-AGENTS.md` as the source text for the shared expectations layer, then keep local machine-specific overrides in `~/.codex/AGENTS.md` under a clearly marked local section.
-
-Run the setup wizard:
+Run the wizard:
 
 ```sh
 sh ./setup.sh
 ```
 
-The wizard asks which app to configure, whether to preview first, whether to replace the active agent instruction file, and whether conflicting paths should be backed up and replaced.
+The wizard asks:
 
-Preview Codex setup:
+- which target to configure: Codex, Claude, Antigravity, or all
+- whether to preview changes first
+- whether to replace the active agent instruction file
+- whether to back up and replace conflicting paths
+
+Non-interactive examples:
 
 ```sh
 sh ./setup.sh --target codex --dry-run
-```
-
-Install all supported agent links:
-
-```sh
+sh ./setup.sh --target claude
+sh ./setup.sh --target antigravity
 sh ./setup.sh --target all
 ```
 
-By default, `Shared-AGENTS.md` is linked as a shared reference file, not as the active instruction file. Use `sh ./setup.sh --target codex --replace-agents --force` only when this repo should own the active global agent file.
+By default, setup links `Shared-AGENTS.md` as a reference file instead of replacing the active instruction file. To make this repo own the active Codex instructions:
 
-If a target already exists, the script stops instead of replacing it. Rerun with `--force` to move the existing target into that app home's `backups/` directory and install the symlink.
+```sh
+sh ./setup.sh --target codex --replace-agents --force
+```
+
+Conflicting files are never overwritten silently. With `--force`, the script first moves the old path into that app home's `backups/` directory.
+
+## Target Homes
+
+Defaults can be overridden with environment variables:
+
+```sh
+CODEX_HOME=~/.codex
+CLAUDE_HOME=~/.claude
+ANTIGRAVITY_HOME=~/.antigravity
+```
+
+Example:
+
+```sh
+ANTIGRAVITY_HOME="$HOME/Library/Application Support/Antigravity" sh ./setup.sh --target antigravity
+```
+
+## What Belongs Here
+
+Add content that should follow Charlie across agent installations:
+
+- repeatable skills
+- shared behavior expectations
+- report-only automation definitions
+- plugin setup notes
+- tiny scripts that make installation or validation safer
+
+Do not commit local agent state, secrets, task transcripts, SQLite databases, generated logs, provider tokens, or machine-specific cache data.
+
+## Workflow
+
+Keep changes small:
+
+- one PR for installer behavior
+- one PR for a related set of skills
+- one PR for automation definitions
+- one PR for shared instruction changes
+
+For skill changes, include a quick validation note in the PR: frontmatter checked, setup dry-run saw the skill, and any scripts passed syntax checks.
+
+## Attribution
+
+Some workflow skills are Charlie-specific adaptations inspired by Matt Pocock's MIT-licensed [`mattpocock/skills`](https://github.com/mattpocock/skills) repository.
